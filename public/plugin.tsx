@@ -38,6 +38,7 @@ import {
 } from '../common';
 import { MapEmbeddableFactoryDefinition } from './embeddable';
 import { setTimeFilter } from './services';
+import { HeaderVariant } from '../../../src/core/public';
 
 export class CustomImportMapPlugin
   implements Plugin<CustomImportMapPluginSetup, CustomImportMapPluginStart> {
@@ -63,6 +64,7 @@ export class CustomImportMapPlugin
         label: 'OpenSearch Plugins',
         order: 2000,
       },
+      headerVariant: HeaderVariant.APPLICATION,
       async mount(params: AppMountParameters) {
         // Load application bundle
         const { renderApp } = await import('./application');

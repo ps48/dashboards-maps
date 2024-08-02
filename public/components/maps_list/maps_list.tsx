@@ -6,23 +6,14 @@
 import { i18n } from '@osd/i18n';
 import React, { useCallback, useEffect } from 'react';
 import { I18nProvider } from '@osd/i18n/react';
-import {
-  EuiPage,
-  EuiPageBody,
-  EuiPageContentBody,
-  EuiLink,
-  EuiSmallButton,
-  EuiPageHeader,
-} from '@elastic/eui';
-import {
-  TableListView,
-  useOpenSearchDashboards,
-} from '../../../../../src/plugins/opensearch_dashboards_react/public';
+import { EuiLink, EuiPage, EuiPageBody, EuiPageContentBody, EuiPageHeader, EuiSmallButton, } from '@elastic/eui';
+import { TableListView, useOpenSearchDashboards, } from '../../../../../src/plugins/opensearch_dashboards_react/public';
 import { MapSavedObjectAttributes } from '../../../common/map_saved_object_attributes';
 import { MapServices } from '../../types';
 import { getMapsLandingBreadcrumbs } from '../../utils/breadcrumbs';
 import { APP_PATH, MAPS_APP_ID } from '../../../common';
 import { DataSourceAggregatedViewConfig } from '../../../../../src/plugins/data_source_management/public';
+import { HeaderVariant } from '../../../../../src/core/public';
 
 export const MapsList = () => {
   const {
@@ -30,7 +21,7 @@ export const MapsList = () => {
       notifications,
       savedObjects: { client: savedObjectsClient },
       application: { navigateToApp },
-      chrome: { docTitle, setBreadcrumbs },
+      chrome: { docTitle, setBreadcrumbs, setHeaderVariant },
       dataSourceManagement,
       setActionMenu,
     },
@@ -40,6 +31,13 @@ export const MapsList = () => {
     setBreadcrumbs(getMapsLandingBreadcrumbs(navigateToApp));
     docTitle.change(i18n.translate('maps.listing.pageTitle', { defaultMessage: 'Maps' }));
   }, [docTitle, navigateToApp, setBreadcrumbs]);
+
+  useEffect(() => {
+    setHeaderVariant?.(HeaderVariant.PAGE);
+    return () => {
+      setHeaderVariant?.();
+    };
+  }, [setHeaderVariant]);
 
   const navigateToSavedMapPage = (id: string) => {
     navigateToApp(MAPS_APP_ID, { path: `/${id}` });

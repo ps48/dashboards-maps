@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Router, Route, Switch } from 'react-router-dom';
 import { I18nProvider } from '@osd/i18n/react';
 import { MapsList } from './maps_list';
@@ -14,8 +14,9 @@ import { MapServices } from '../types';
 
 export const MapsDashboardsApp = () => {
   const {
-    services: { appBasePath },
+    services: { appBasePath, chrome },
   } = useOpenSearchDashboards<MapServices>();
+
   // Render the application DOM.
   return (
     <Router history={appBasePath}>
