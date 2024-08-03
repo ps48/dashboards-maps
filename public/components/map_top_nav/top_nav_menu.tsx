@@ -6,15 +6,15 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { SimpleSavedObject } from '../../../../../src/core/public';
 import { IndexPattern, Query, TimeRange } from '../../../../../src/plugins/data/public';
-import { DASHBOARDS_MAPS_LAYER_TYPE, MAPS_APP_ID } from '../../../common';
-import { getTopNavConfig } from './get_top_nav_config';
 import { useOpenSearchDashboards } from '../../../../../src/plugins/opensearch_dashboards_react/public';
-import { MapServices } from '../../types';
+import { DASHBOARDS_MAPS_LAYER_TYPE, MAPS_APP_ID } from '../../../common';
 import { MapSavedObjectAttributes } from '../../../common/map_saved_object_attributes';
-import { getSavedMapBreadcrumbs } from '../../utils/breadcrumbs';
 import { handleDataLayerRender } from '../../model/layerRenderController';
 import { MapLayerSpecification } from '../../model/mapLayerType';
 import { MapState } from '../../model/mapState';
+import { MapServices } from '../../types';
+import { getSavedMapBreadcrumbs } from '../../utils/breadcrumbs';
+import { getTopNavConfig } from './get_top_nav_config';
 
 interface MapTopNavMenuProps {
   mapIdFromUrl: string;
@@ -55,7 +55,7 @@ export const MapTopNavMenu = ({
     notifications,
   } = services;
 
-  const [title, setTitle] = useState<string>('');
+  const [title, setTitle] = useState<string>('Untitled');
   const [description, setDescription] = useState<string>('');
   const [dateFrom, setDateFrom] = useState<string>('');
   const [dateTo, setDateTo] = useState<string>('');
@@ -145,6 +145,7 @@ export const MapTopNavMenu = ({
       <TopNavMenu
         appName={MAPS_APP_ID}
         config={config}
+        screenTitle={title}
         setMenuMountPoint={setHeaderActionMenu}
         indexPatterns={layersIndexPatterns || []}
         showSearchBar={true}
